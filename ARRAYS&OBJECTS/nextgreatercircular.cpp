@@ -1,27 +1,31 @@
-#include <iostream>
-#include <vector>
-#include <stack>
+#include<iostream>
+#include<stack>
 using namespace std;
 
-vector<int> nextGreater(vector<int>& nums)
+void nextGreater(int arr[], int n)
 {
-    int n = nums.size();
-    vector<int> result(n, -1);
     stack<int> st;
 
-    for(int i = 0; i < 2*n; i++)
+    for(int i=n-1;i>=0;i--)
     {
-        int num = nums[i % n];
-
-        while(!st.empty() && nums[st.top()] < num)
+        while(!st.empty() && st.top() <= arr[i])
         {
-            result[st.top()] = num;
             st.pop();
         }
 
-        if(i < n)
-            st.push(i);
-    }
+        if(st.empty())
+            cout << arr[i] << " -> -1" << endl;
+        else
+            cout << arr[i] << " -> " << st.top() << endl;
 
-    return result;
+        st.push(arr[i]);
+    }
+}
+
+int main()
+{
+    int arr[] = {4,5,2,10,8};
+    int n = 5;
+
+    nextGreater(arr,n);
 }
